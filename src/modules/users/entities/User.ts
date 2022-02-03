@@ -22,6 +22,9 @@ export class User {
   @Exclude()
   password: string;
 
+  @Column('boolean')
+  active: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

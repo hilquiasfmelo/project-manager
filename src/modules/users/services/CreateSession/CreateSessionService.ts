@@ -32,14 +32,21 @@ export class CreateSessionService {
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.userRepository.findByEmail(email);
 
+    // Verify if user is already exists
     if (!user) {
       throw new AppError('Email or password incorrect. Please try again.', 401);
     }
 
     const passwordMatch = await compare(password, user.password);
 
+    // Verify if the password match
     if (!passwordMatch) {
       throw new AppError('Email or password incorrect. Please try again.', 401);
+    }
+
+    // Verify if the user is active
+    if (!user.active) {
+      throw new AppError('User is not active. Please try again.', 401);
     }
 
     // Create Token JWT
