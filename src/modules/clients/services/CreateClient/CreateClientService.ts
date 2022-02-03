@@ -1,11 +1,7 @@
+import { AppError } from '@shared/errors/AppError';
 import { Client } from '@modules/clients/entities/Client';
 import { ClientRepository } from '@modules/clients/repositories/implementations/ClientRepository';
 import { IClientRepository } from '@modules/clients/repositories/interfaces/IClientRepository';
-import { User } from '@modules/users/entities/User';
-import { UserRepository } from '@modules/users/repositories/implementations/UserRepository';
-import { IUserRepository } from '@modules/users/repositories/interfaces/IUserRepository';
-import { AppError } from '@shared/errors/AppError';
-import { hash } from 'bcryptjs';
 
 interface IRequest {
   name: string;
