@@ -1,6 +1,6 @@
 import { ICreateClientDTO } from '@modules/clients/dtos/ICreateClientDTO';
 import { Client } from '@modules/clients/entities/Client';
-import { getRepository, Like, Repository } from 'typeorm';
+import { getRepository, ILike, Repository } from 'typeorm';
 import { IClientRepository } from '../interfaces/IClientRepository';
 
 export class ClientRepository implements IClientRepository {
@@ -36,7 +36,7 @@ export class ClientRepository implements IClientRepository {
 
   public async findAllByName(name: string): Promise<Client[]> {
     return this.clientRepository.find({
-      name: Like(`%${name}%`),
+      name: ILike(`%${name}%`),
     });
   }
 
