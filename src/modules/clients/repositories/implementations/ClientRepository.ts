@@ -1,6 +1,6 @@
 import { ICreateClientDTO } from '@modules/clients/dtos/ICreateClientDTO';
 import { Client } from '@modules/clients/entities/Client';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Like, Repository } from 'typeorm';
 import { IClientRepository } from '../interfaces/IClientRepository';
 
 export class ClientRepository implements IClientRepository {
@@ -34,6 +34,19 @@ export class ClientRepository implements IClientRepository {
     return client;
   }
 
+  public async findAllByName(name: string): Promise<Client[]> {
+    return this.clientRepository.find({
+      name: Like(`%${name}%`),
+    });
+  }
+
+  public async findAllPaginated(page: number): Promise<[Client[], number]> {
+    return this.clientRepository.findAndCount({
+      skip: page,
+      take: 10,
+    });
+  }
+
   public async create({
     name,
     email,
@@ -54,5 +67,9 @@ export class ClientRepository implements IClientRepository {
 
   public async save(client: Client): Promise<Client> {
     return this.clientRepository.save(client);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.clientRepository.delete(id);
   }
 }
