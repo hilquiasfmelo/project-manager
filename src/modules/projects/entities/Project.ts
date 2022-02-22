@@ -8,8 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { ProjectStatus } from 'enums/ProjectStatus';
 import { Client } from '@modules/clients/entities/Client';
+import { ProjectStatus } from '../enums/ProjectStatus';
 
 @Entity('projects')
 export class Project {
@@ -19,10 +19,12 @@ export class Project {
   @Column()
   name: string;
 
-  @ManyToOne(() => Client)
-  @JoinColumn({ name: 'client_id', referencedColumnName: 'id' })
   @Column()
   client_id: string;
+
+  @ManyToOne(() => Client)
+  @JoinColumn({ name: 'client_id', referencedColumnName: 'id' })
+  client: string;
 
   @Column({
     type: 'varchar',

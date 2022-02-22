@@ -2,7 +2,7 @@
   "type": "postgres",
   "port": 5432,
   "host": "localhost",
-  "username": "postgres",
+  "username": "docker",
   "password": "docker",
   "database": "db_project_manager",
   "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],

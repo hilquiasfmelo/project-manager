@@ -11,15 +11,41 @@ export class ProjectRepository implements IProjectRepository {
   }
 
   public async findAll(): Promise<Project[]> {
-    throw new Error('Method not implemented.');
+    return this.projectsRepository.find({
+      // Retorna o cliente dos projetos
+      relations: ['client'],
+    });
   }
+
   public async findById(id: string): Promise<Project | undefined> {
-    throw new Error('Method not implemented.');
+    const project = await this.projectsRepository.findOne(id, {
+      relations: ['client'],
+    });
+
+    return project;
   }
-  public async create(data: ICreateProjectDTO): Promise<Project> {
-    throw new Error('Method not implemented.');
+
+  public async create({
+    name,
+    client_id,
+    status,
+    logo,
+    description,
+  }: ICreateProjectDTO): Promise<Project> {
+    const project = this.projectsRepository.create({
+      name,
+      client_id,
+      status,
+      logo,
+      description,
+    });
+
+    await this.projectsRepository.save(project);
+
+    return project;
   }
+
   public async save(project: Project): Promise<Project> {
-    throw new Error('Method not implemented.');
+    return this.projectsRepository.save(project);
   }
 }

@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { authenticate } from 'middlewares/auth';
+
+import { authenticate } from '@shared/infra/middlewares/auth';
 
 import { CreateClientController } from '../services/CreateClient/CreateClientController';
 import { DeleteClientController } from '../services/DeleteClient/DeleteClientController';

@@ -1,5 +1,5 @@
+import { authenticate } from '@shared/infra/middlewares/auth';
 import { Router } from 'express';
-import { authenticate } from 'middlewares/auth';
 
 import { CreateUserController } from '../services/CreateUser/CreateUserController';
 import { EnableUserController } from '../services/EnableUser/EnableUserController';
