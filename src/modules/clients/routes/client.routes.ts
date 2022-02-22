@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { authenticate } from 'middlewares/auth';
 
 import { CreateClientController } from '../services/CreateClient/CreateClientController';
 import { DeleteClientController } from '../services/DeleteClient/DeleteClientController';
@@ -8,6 +9,8 @@ import { SearchClientController } from '../services/SearchClient/SearchClientCon
 import { UpdateClientController } from '../services/UpdateClient/UpdateClientController';
 
 export const clientRouter = Router();
+
+clientRouter.use(authenticate);
 
 clientRouter.post('/', new CreateClientController().handle);
 clientRouter.get('/', new ListClientsController().handle);

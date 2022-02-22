@@ -23,6 +23,7 @@
     "prettier/prettier": "error",
     "import/no-unresolved": "error",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       {
