@@ -11,7 +11,7 @@ import { AppError } from '@shared/errors/AppError';
 interface IRequest {
   name: string;
   client_id: string;
-  logo: string;
+  logo?: string | undefined;
   description: string;
 }
 

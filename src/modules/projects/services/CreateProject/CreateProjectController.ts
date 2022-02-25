@@ -6,7 +6,8 @@ import { CreateProjectService } from './CreateProjectService';
 
 export class CreateProjectController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, client_id, logo, description } = request.body;
+    const { name, client_id, description } = request.body;
+    const logo = request.file?.filename;
 
     const projectRepository = new ProjectRepository();
     const clientRepository = new ClientRepository();

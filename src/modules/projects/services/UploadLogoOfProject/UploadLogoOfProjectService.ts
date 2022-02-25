@@ -1,34 +1,34 @@
 import { Project } from '@modules/projects/entities/Project';
-import { ProjectStatus } from '@modules/projects/enums/ProjectStatus';
-import { ProjectRepository } from '@modules/projects/repositories/implementations/ProjectRepository';
 import { IProjectRepository } from '@modules/projects/repositories/interfaces/IProjectRepository';
+import { ProjectRepository } from '@modules/projects/repositories/implementations/ProjectRepository';
+
 import { AppError } from '@shared/errors/AppError';
 
-interface IRequestUpdate {
+interface IRequest {
   id: string;
-  status: ProjectStatus;
+  logo?: string;
 }
 
-export class UpdateProjectStatusService {
+export class UploadLogoOfProjectService {
   private projectRepository: IProjectRepository;
 
   constructor(projectRepository: ProjectRepository) {
     this.projectRepository = projectRepository;
   }
 
-  async execute({ id, status }: IRequestUpdate): Promise<Project> {
+  async execute({ id, logo }: IRequest): Promise<Project> {
     const project = await this.projectRepository.findById(id);
 
     if (!project) {
-      throw new AppError('Project not found.', 404);
+      throw new AppError('Project not exists.');
     }
 
     Object.assign(project, {
-      status,
+      logo,
     });
 
-    const updatedProject = await this.projectRepository.save(project);
+    await this.projectRepository.save(project);
 
-    return updatedProject;
+    return project;
   }
 }
