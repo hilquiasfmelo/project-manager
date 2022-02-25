@@ -11,6 +11,7 @@ import { UpdateProjectController } from '../services/UpdateProject/UpdateProject
 import { ShowProjectController } from '../services/ShowProject/ShowProjectController';
 import { UpdateProjectStatusController } from '../services/UpdateProjectStatus/UpdateProjectStatusController';
 import { UploadLogoOfProjectController } from '../services/UploadLogoOfProject/UploadLogoOfProjectController';
+import { ListAllProjectOfUserController } from '../services/ListAllProjectOfUser/ListAllProjectOfUserController';
 
 export const projectRouter = Router();
 
@@ -29,6 +30,10 @@ projectRouter.put(
 );
 
 projectRouter.get('/', new ListAllProjectController().handle);
+projectRouter.get(
+  '/users/:user_id',
+  new ListAllProjectOfUserController().handle,
+);
 projectRouter.get('/:id', new ShowProjectController().handle);
 projectRouter.put('/:id', new UpdateProjectController().handle);
 projectRouter.patch('/:id', new UpdateProjectStatusController().handle);

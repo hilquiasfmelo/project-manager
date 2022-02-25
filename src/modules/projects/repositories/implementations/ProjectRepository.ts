@@ -17,6 +17,13 @@ export class ProjectRepository implements IProjectRepository {
     });
   }
 
+  public async findAllOfUser(user_id: string): Promise<Project[]> {
+    return this.projectsRepository.find({
+      relations: ['client'],
+      where: { user_id },
+    });
+  }
+
   public async findById(id: string): Promise<Project | undefined> {
     const project = await this.projectsRepository.findOne(id, {
       relations: ['client'],
@@ -28,6 +35,7 @@ export class ProjectRepository implements IProjectRepository {
   public async create({
     name,
     client_id,
+    user_id,
     status,
     logo,
     description,
@@ -35,6 +43,7 @@ export class ProjectRepository implements IProjectRepository {
     const project = this.projectsRepository.create({
       name,
       client_id,
+      user_id,
       status,
       logo,
       description,

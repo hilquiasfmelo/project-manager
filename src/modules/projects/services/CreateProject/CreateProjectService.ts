@@ -7,10 +7,12 @@ import { IProjectRepository } from '@modules/projects/repositories/interfaces/IP
 import { ProjectRepository } from '@modules/projects/repositories/implementations/ProjectRepository';
 
 import { AppError } from '@shared/errors/AppError';
+import { IUserRepository } from '@modules/users/repositories/interfaces/IUserRepository';
 
 interface IRequest {
   name: string;
   client_id: string;
+  user_id: string;
   logo?: string | undefined;
   description: string;
 }
@@ -18,31 +20,41 @@ interface IRequest {
 export class CreateProjectService {
   private projectRepository: IProjectRepository;
   private clientRepository: IClientRepository;
+  private userRepository: IUserRepository;
 
   constructor(
     projectRepository: ProjectRepository,
     clientRepository: ClientRepository,
+    userRepository: IUserRepository,
   ) {
     this.projectRepository = projectRepository;
     this.clientRepository = clientRepository;
+    this.userRepository = userRepository;
   }
 
   async execute({
     name,
     client_id,
+    user_id,
     logo,
     description,
   }: IRequest): Promise<Project> {
     // Verifica se o client existe
     const verifyClient = await this.clientRepository.findById(client_id);
+    const verifyUser = await this.userRepository.findById(user_id);
 
     if (!verifyClient) {
       throw new AppError('Client not exists.');
     }
 
+    if (!verifyUser) {
+      throw new AppError('User not exists.');
+    }
+
     const project = await this.projectRepository.create({
       name,
       client_id,
+      user_id,
       status: ProjectStatus.NEW,
       logo,
       description,

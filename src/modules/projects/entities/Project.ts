@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 
 import { Client } from '@modules/clients/entities/Client';
+import { User } from '@modules/users/entities/User';
 import { ProjectStatus } from '../enums/ProjectStatus';
 
 @Entity('projects')
@@ -23,8 +24,15 @@ export class Project {
   client_id: string;
 
   @ManyToOne(() => Client)
-  @JoinColumn({ name: 'client_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'client_id' })
   client: string;
+
+  @Column()
+  user_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: string;
 
   @Column({
     type: 'varchar',
